@@ -1,0 +1,230 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Personal-Expense-Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+      body{
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+      .content-section { display: none; }
+      .active-tab { font-weight: bold; border-left: 3px solid black;}
+    </style>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+  // Load google charts
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+
+  // Get the total income and expense from Django template variables
+  var totalIncome = parseFloat("{{ total_income|safe }}");
+  var totalExpense = parseFloat("{{ total_expense|safe }}");
+
+  // Draw the chart and set the chart values
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Category', 'Amount'],
+      ['Total Income', totalIncome],
+      ['Total Expense', totalExpense]
+    ]);
+
+    // Optional; add a title and set the width and height of the chart
+    var options = {
+      'width': 490,
+      'height': 340,
+      'backgroundColor': 'transparent',
+      'pieHole': 0.4,  // Creates the doughnut shape
+      'pieSliceText': 'value',  // Display the value inside slices
+      'legend': {
+        position: 'bottom'  // Position the legend at the bottom
+      },
+      'colors': ['#4CAF50', '#F44336'], // Green for income, red for expense
+    };
+
+    // Display the chart inside the <div> element with id="piechart"
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+    chart.draw(data, options);
+  }
+</script>
+
+
+</head>
+<body class="bg-gray-100 flex">
+  <nav class="relative flex-col bg-gray-200 w-[300px] h-[90svh] my-6 mx-6 mt-10 p-6 rounded-2xl shadow-xl border-2 border-white">
+    <div class="flex flex-col items-center gap-4 mb-10">
+      <img src="{% static 'images/skull.png' %}" alt="" class="w-[120px] h-[120px] rounded-full border-2 border-white bg-red-600" />
+      <h2 class="text-gray-600 text-xl">Bala</h2>
+    </div>
+    <ul class="flex flex-col gap-4 text-gray-600 text-lg font-normal">
+      <li id="dashboard-tab" class="hover:font-bold cursor-pointer pl-3"><i class="fa-solid fa-chart-line pr-2"></i>Dashboard</li>
+      <li id="incomes-tab" class="hover:font-bold cursor-pointer pl-3"><i class="fa-solid fa-wallet pr-2"></i></i>Incomes</li>
+      <li id="expenses-tab" class="hover:font-bold cursor-pointer pl-3"><i class="fa-solid fa-hand-holding-dollar pr-2"></i>Expenses</li>
+      
+    </ul>
+    <div class="flex items-center gap-2 text-gray-600 text-lg absolute bottom-6 left-6 cursor-pointer hover:font-bold">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>
+      <p>Signout</p>
+    </div>
+  </nav>
+  
+  <div class='content-container bg-gray-200 w-[75%] h-[90svh] rounded-2xl p-10 mt-10 shadow-lg border-2 border-white'>
+    <!--Dashboard-->
+    <div id="dashboard-content" class="content-section relative">
+        <h1 class="text-3xl font-semibold text-center">Dashboard</h1>
+        <div class="flex gap-6">
+          <p class='bg-white/70 text-center border-2 w-[90%] border-white p-4 mx-12 rounded-lg text-lg font-medium mt-10 shadow-lg'>Total Income : <span class="text-green-600 font-bold text-2xl"> $ {{ total_income }}</span></p>
+          <p class='bg-white/70 text-center border-2 w-[90%] border-white p-4 mx-12 rounded-lg text-lg font-medium mt-10 shadow-lg'>Total Expense : <span class="text-red-600 font-bold text-2xl"> - $ {{ total_expense }}</span></p>
+        </div>
+        <p class='bg-white/70 text-center border-2 ml-[300px] mr-[300px] text-center border-white p-4 mx-12 rounded-lg text-lg font-medium mt-10 shadow-lg'>Total Savings : <span class="text-green-600 font-bold text-2xl">  $ {{ savings }}</span></p>
+        <div class="flex justify-center">
+          <div id="piechart"></div>
+        </div>
+        <div class="absolute bottom-0 right-0">
+            <p>Developed by <span class="font-semibold">Bala</span></p>
+            <div class="flex justify-center mt-2 gap-5">
+              <a href="https://www.instagram.com/itz_.bala_/" target="_blank"><i class="fa-brands fa-instagram fa-lg cursor-pointer"></i></a>
+              <a href="https://x.com/K_arthi7777" target="_blank"><i class="fa-brands fa-twitter fa-lg cursor-pointer"></i></a>             
+            </div>
+        </div>
+    </div>
+    
+    <!--Incomes-->
+    <div id="incomes-content" class="content-section">
+        <h1 class="text-3xl font-semibold text-center">Incomes</h1>
+        <p class='bg-white/70 text-center border-2 w-[90%] border-white p-4 mx-12 rounded-lg text-lg font-medium mt-6 shadow-lg'>Total Income : <span class="text-green-600 font-bold text-2xl"> $ {{ total_income }}</span></p>
+        <div class='mt-6 flex justify-around w-[90%]'>
+          <div>
+            <form action="" method="POST" class='flex flex-col gap-4 p-5 w-96 mx-auto relative'>
+              {% csrf_token %}
+              <input 
+                name="name"
+                placeholder='Title' 
+                required
+                class="rounded-md p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <input 
+                name="amount"
+                placeholder='Amount'
+                required
+                class="rounded-md p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <input 
+                name="description"
+                placeholder='Description'
+                required
+                class="rounded-md p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <button type="submit" class="text-white bg-red-600 rounded-3xl p-3 w-42 text-center absolute right-5 bottom-[-50px] cursor-pointer hover:bg-red-600"><i class="fa-solid fa-circle-plus pr-2"></i>Add Income</button>
+            </form>
+          </div>
+          <div>
+            <h1 class="text-2xl font-semibold text-center mb-5">Recents</h1>
+            {% for income in incomes %}
+<div class="flex gap-5">
+  <div class="bg-white p-5 rounded-xl shadow-lg font-semibold flex gap-6 mb-4">
+    <p><i class="fa-solid fa-money-check-dollar fa-lg pr-2"></i>{{income.name}}</p>
+    <p class="text-green-600 font-bold"><i class="fa-solid fa-dollar-sign"></i> {{income.amount}}</p>
+    <p><i class="fa-solid fa-comment pr-2"></i>{{income.description}}</p>
+  </div>
+  <form action="{% url 'delete_income' income.id %}" method="POST">
+    {% csrf_token %}
+    <button type="submit" class="text-white bg-red-600 p-2 mt-3 text-lg rounded-full"><i class="fa-solid fa-trash"></i></button>
+  </form>
+</div>
+{% endfor %}
+          </div>
+        </div>
+    </div>
+  
+    <!--Expenses-->
+    <div id="expenses-content" class="content-section">
+      <h1 class="text-3xl font-semibold text-center">Expenses</h1>
+      <p class='bg-white/70 text-center border-2 border-white p-4 w-[90%] mx-12 rounded-lg text-lg font-medium mt-6 shadow-lg'>Total Expense :<span class="text-red-600 font-bold text-2xl"> - $ {{ total_expense }}</span></p>
+      <div class='mt-6 flex justify-around w-[90%]'>
+        <div>
+          <form action="" method="POST" class='flex flex-col gap-4 p-5 w-96 mx-auto relative'>
+            {% csrf_token %}
+            <input 
+              name="ename"
+              placeholder='Title' 
+              required
+              class="rounded-md p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input 
+              name="eamount"
+              placeholder='Amount'
+              required
+              class="rounded-md p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input 
+              name="edescription"
+              placeholder='Description'
+              required
+              class="rounded-md p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button type="submit" class="text-white bg-red-600 rounded-3xl p-3 w-42 text-center absolute right-5 bottom-[-50px] cursor-pointer hover:bg-red-600"><i class="fa-solid fa-circle-plus pr-2"></i>Add Expense</button>
+          </form>
+        </div>
+        <div>
+          <h1 class="text-2xl font-semibold text-center mb-5">Recents</h1>
+          {% for expense in expenses %}
+<div class="flex gap-5">
+  <div class="bg-white p-5 mb-4 rounded-xl shadow-lg font-semibold flex gap-6">
+    <p><i class="fa-solid fa-money-check-dollar fa-lg pr-2"></i>{{expense.ename}}</p>
+    <p class="text-red-600 font-bold"><i class="fa-solid fa-dollar-sign"></i> {{expense.eamount}}</p>
+    <p><i class="fa-solid fa-comment pr-2"></i>{{expense.edescription}}</p>
+  </div>
+  <form action="{% url 'delete_expense' expense.id %}" method="POST">
+    {% csrf_token %}
+    <button type="submit" class="text-white bg-red-600 p-2 mt-3 text-lg rounded-full"><i class="fa-solid fa-trash"></i></button>
+  </form>
+</div>
+{% endfor %}
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabs = document.querySelectorAll('nav ul li');
+      const contentSections = document.querySelectorAll('.content-section');
+      const piechartDiv = document.getElementById('piechart');  // Get the pie chart div
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active-tab'));
+          contentSections.forEach(section => section.style.display = 'none');
+          piechartDiv.style.display = 'none';  // Hide pie chart by default
+
+          const sectionId = tab.id.replace('-tab', '-content');
+          const sectionToShow = document.getElementById(sectionId);
+          if (sectionToShow) sectionToShow.style.display = 'block';
+
+          tab.classList.add('active-tab');
+
+          if (tab.id === 'dashboard-tab') {
+            piechartDiv.style.display = 'block';  // Show pie chart on dashboard
+            drawChart();  // Redraw chart to ensure it shows correctly
+          }
+        });
+      });
+
+      const defaultTab = document.getElementById('dashboard-tab');
+      defaultTab.click();  // Trigger dashboard tab to load by default
+    });
+  </script>
+</body>
+</html>
