@@ -128,8 +128,8 @@
               <button type="submit" class="text-white bg-red-600 rounded-3xl p-3 w-42 text-center absolute right-5 bottom-[-50px] cursor-pointer hover:bg-red-600"><i class="fa-solid fa-circle-plus pr-2"></i>Add Income</button>
             </form>
           </div>
-          <div>
-            <h1 class="text-2xl font-semibold text-center mb-5">Recents</h1>
+          <div class="max-h-[400px] overflow-y-auto pr-2">
+  <h1 class="text-2xl font-semibold text-center mb-5">Recents</h1>
             {% for income in incomes %}
 <div class="flex gap-5">
   <div class="bg-white p-5 rounded-xl shadow-lg font-semibold flex gap-6 mb-4">
@@ -176,8 +176,8 @@
             <button type="submit" class="text-white bg-red-600 rounded-3xl p-3 w-42 text-center absolute right-5 bottom-[-50px] cursor-pointer hover:bg-red-600"><i class="fa-solid fa-circle-plus pr-2"></i>Add Expense</button>
           </form>
         </div>
-        <div>
-          <h1 class="text-2xl font-semibold text-center mb-5">Recents</h1>
+        <div class="max-h-[400px] overflow-y-auto pr-2">
+  <h1 class="text-2xl font-semibold text-center mb-5">Recents</h1>
           {% for expense in expenses %}
 <div class="flex gap-5">
   <div class="bg-white p-5 mb-4 rounded-xl shadow-lg font-semibold flex gap-6">
