@@ -79,7 +79,7 @@
   </script>
 </head>
 
-<body class="bg-gray-100 min-h-screen flex flex-col lg:flex-row">
+<body class="bg-gray-100 min-h-screen flex flex-col lg:flex-row mr-8">
   <!-- Sidebar -->
   <nav class="bg-gray-200 w-full lg:w-[300px] h-auto lg:h-[90vh] m-4 p-6 rounded-2xl shadow-xl border-2 border-white">
     <div class="flex flex-col items-center gap-4 mb-10">
@@ -134,12 +134,12 @@
           <input name="name" placeholder="Title" required class="rounded-md p-3 border border-gray-300 focus:ring-2 focus:ring-blue-500" />
           <input name="amount" placeholder="Amount" required class="rounded-md p-3 border border-gray-300 focus:ring-2 focus:ring-blue-500" />
           <input name="description" placeholder="Description" required class="rounded-md p-3 border border-gray-300 focus:ring-2 focus:ring-blue-500" />
-          <button type="submit" class="text-white bg-red-600 rounded-3xl p-3 absolute right-0 bottom-[-60px] hover:bg-red-700"><i class="fa-solid fa-circle-plus pr-2"></i>Add Income</button>
+          <button type="submit" class="text-white bg-red-600 rounded-3xl p-3 hover:bg-red-700"><i class="fa-solid fa-circle-plus pr-2"></i>Add Income</button>
         </form>
         <div class="max-h-[400px] overflow-y-auto w-full max-w-xl mx-auto">
           <h2 class="text-xl font-semibold text-center mb-4">Recents</h2>
           {% for income in incomes %}
-          <div class="flex gap-4 mb-4">
+          <div class="flex gap-4 mb-4 items-center">
             <div class="bg-white p-4 rounded-xl shadow-lg flex flex-col md:flex-row gap-4 flex-grow">
               <p><i class="fa-solid fa-money-check-dollar pr-2"></i>{{ income.name }}</p>
               <p class="text-green-600 font-bold"><i class="fa-solid fa-dollar-sign"></i> {{ income.amount }}</p>
@@ -167,12 +167,12 @@
           <input name="ename" placeholder="Title" required class="rounded-md p-3 border border-gray-300 focus:ring-2 focus:ring-blue-500" />
           <input name="eamount" placeholder="Amount" required class="rounded-md p-3 border border-gray-300 focus:ring-2 focus:ring-blue-500" />
           <input name="edescription" placeholder="Description" required class="rounded-md p-3 border border-gray-300 focus:ring-2 focus:ring-blue-500" />
-          <button type="submit" class="text-white bg-red-600 rounded-3xl p-3 absolute right-0 bottom-[-60px] hover:bg-red-700"><i class="fa-solid fa-circle-plus pr-2"></i>Add Expense</button>
+          <button type="submit" class="text-white bg-red-600 rounded-3xl p-3 hover:bg-red-700"><i class="fa-solid fa-circle-plus pr-2"></i>Add Expense</button>
         </form>
         <div class="max-h-[400px] overflow-y-auto w-full max-w-xl mx-auto">
           <h2 class="text-xl font-semibold text-center mb-4">Recents</h2>
           {% for expense in expenses %}
-          <div class="flex gap-4 mb-4">
+          <div class="flex gap-4 mb-4 items-center">
             <div class="bg-white p-4 rounded-xl shadow-lg flex flex-col md:flex-row gap-4 flex-grow">
               <p><i class="fa-solid fa-money-check-dollar pr-2"></i>{{ expense.ename }}</p>
               <p class="text-red-600 font-bold"><i class="fa-solid fa-dollar-sign"></i> {{ expense.eamount }}</p>
